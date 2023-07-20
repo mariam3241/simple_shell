@@ -83,5 +83,5 @@ int _putchar(char c)
 	}
 	if (c != BUF_FLUSE)
 		buf[i++] = c;
-	return (i);
+	return (1);
 }
