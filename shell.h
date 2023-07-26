@@ -21,7 +21,7 @@
 #define CMD_AND		2
 #define CMD_CHAIN	3
 
-#define CONV_LOWER	1
+#define CONVERT_LOWERCASE	1
 #define CONVERT_UNSIGNED	2
 
 #define USE_GETLINE 0
@@ -35,9 +35,9 @@ extern char **environ;
 
 /**
  * struct liststr - singly linked list
- * @num: element
- * @str: element
- * @next: element
+ * @num: .
+ * @str: .
+ * @next: .
  */
 typedef struct liststr
 {
@@ -47,25 +47,25 @@ typedef struct liststr
 } list_t;
 
 /**
- *struct passinfo - a struct contains pseudo-arguements to pass into a function
- *@arg: element
- *@argv: element
- *@path: element
- *@argc: element
- *@line_count: element
- *@err_num: element
- *@linecount_flag: element
- *@fname: element
- *@env: element
- *@environ: element
- *@history: element
- *@alias: element
- *@env_changed: element
- *@status: element
- *@cmd_buf: element
- *@cmd_buf_type: element
- *@readfd: element
- *@histcount: element
+ *struct passinfo - contains pseudo-arguements to pass into a function
+ *@arg: .
+ *@argv: .
+ *@path: .
+ *@argc: .
+ *@line_count: .
+ *@err_num: .
+ *@linecount_flag: .
+ *@fname: .
+ *@env: .
+ *@environ: .
+ *@history: .
+ *@alias: .
+ *@env_changed: .
+ *@status: .
+ *@cmd_buf: .
+ *@cmd_buf_type: .
+ *@readfd: .
+ *@histcount: .
  */
 typedef struct passinfo
 {
@@ -94,9 +94,9 @@ typedef struct passinfo
 	0, 0, 0}
 
 /**
- *struct builtin - a struct contains a builtin string and related function
- *@type: element
- *@func: element
+ *struct builtin - contains a builtin string and related function
+ *@type: .
+ *@func: .
  */
 typedef struct builtin
 {
@@ -130,18 +130,18 @@ char *_strchr(char *, char);
 char **strtow(char *, char *);
 char **strtow2(char *, char);
 char *_memset(char *, char, unsigned int);
-void freestr(char **);
+void ffree(char **);
 void *_realloc(void *, unsigned int, unsigned int);
-int freeptr(void **);
-int isactive(info_t *);
-int delimeterchar(char, char *);
+int bfree(void **);
+int interactive(info_t *);
+int is_delim(char, char *);
 int _isalpha(int);
-int atoi(char *);
-int strtoint(char *);
-void errormsg(info_t *, char *);
-int printdeci(int, int);
-char *convnum(long int, int, int);
-void comments_handeler(char *);
+int _atoi(char *);
+int _erratoi(char *);
+void print_error(info_t *, char *);
+int print_d(int, int);
+char *convert_number(long int, int, int);
+void remove_comments(char *);
 int _myexit(info_t *);
 int _mycd(info_t *);
 int _myhelp(info_t *);
@@ -169,8 +169,8 @@ int renumber_history(info_t *info);
 list_t *add_node(list_t **, const char *, int);
 list_t *add_node_end(list_t **, const char *, int);
 size_t print_list_str(const list_t *);
-int delete_specificnode(list_t **, unsigned int);
-void freelist(list_t **);
+int delete_node_at_index(list_t **, unsigned int);
+void free_list(list_t **);
 size_t list_len(const list_t *);
 char **list_to_strings(list_t *);
 size_t print_list(const list_t *);
