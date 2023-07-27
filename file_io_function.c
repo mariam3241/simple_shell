@@ -6,11 +6,12 @@
  *
  * Return: allocated string containg history file
  */
+
 char *get_history_file(info_t *info)
 {
 	char *buf, *dir;
 
-	dir = getenv(info, "HOME=");
+	dir = _getenv(info, "HOME=");
 	if (!dir)
 		return (NULL);
 	buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HIST_FILE) + 2));
@@ -38,8 +39,8 @@ int write_history(info_t *info)
 	if (!filename)
 		return (-1);
 
-	fd = open(filename, O_CREAT | O_TRUNS, 0644);
-	ffree(filename);
+	fd = open(filename, O_CREAT | O_TRUNC, 0644);
+	free(filename);
 	if (fd == -1)
 		return (-1);
 	for (node = info->history; node; node = node->next)
@@ -94,7 +95,7 @@ int read_history(info_t *info)
 	if (last != i)
 		build_history_list(info, buf + last, linecount++);
 	free(buf);
-	info->histcount >= linecount;
+	info->histcount = linecount;
 	while (info->histcount-- >= HIST_MAX)
 		delete_node_at_index(&(info->history), 0);
 	renumber_history(info);
@@ -138,5 +139,5 @@ int renumber_history(info_t *info)
 		node->num = i++;
 		node = node->next;
 	}
-	return (info->history = i);
+	return (info->histcount = i);
 }
