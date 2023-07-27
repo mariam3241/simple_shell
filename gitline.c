@@ -90,7 +90,7 @@ ssize_t get_input(info_t *info)
  * @info: parameter
  * @buf: parameter
  * @i: parameter
- * Return: size of the list
+ * Return: r
  */
 ssize_t read_buf(info_t *info, char *buf, size_t *i)
 {
@@ -109,7 +109,7 @@ ssize_t read_buf(info_t *info, char *buf, size_t *i)
  * @info: parameter
  * @ptr: parameter
  * @length: parameter
- * Return: an int value
+ * Return: s
  */
 int _getline(info_t *info, char **ptr, size_t *length)
 {

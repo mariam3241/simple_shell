@@ -4,10 +4,10 @@
  * add_node - a fun that adds a node to the start of the list
  * @head: parameter
  * @str: parameter
- * @data: parameter
+ * @num: parameter
  * Return: size of list
  */
-list_t *add_node(list_t **head, const char *str, int data)
+list_t *add_node(list_t **head, const char *str, int num)
 {
 	list_t *new_head;
 
@@ -17,7 +17,7 @@ list_t *add_node(list_t **head, const char *str, int data)
 	if (!new_head)
 		return (NULL);
 	_memset((void *)new_head, 0, sizeof(list_t));
-	new_head->data = data;
+	new_head->num = num;
 	if (str)
 	{
 		new_head->str = _strdup(str);
@@ -36,10 +36,10 @@ list_t *add_node(list_t **head, const char *str, int data)
  * add_node_end - a fun that adds a node to the end of the list
  * @head: parameter
  * @str: parameter
- * @data: parameter
+ * @num: parameter
  * Return: size of list
  */
-list_t *add_node_end(list_t **head, const char *str, int data)
+list_t *add_node_end(list_t **head, const char *str, int num)
 {
 	list_t *new_node, *node;
 
@@ -51,7 +51,7 @@ list_t *add_node_end(list_t **head, const char *str, int data)
 	if (!new_node)
 		return (NULL);
 	_memset((void *)new_node, 0, sizeof(list_t));
-	new_node->data = data;
+	new_node->num = num;
 	if (str)
 	{
 		new_node->str = _strdup(str);
@@ -73,31 +73,31 @@ list_t *add_node_end(list_t **head, const char *str, int data)
 }
 
 /**
- * print_list_str - prints only the str element of a list_t linked list
- * @ptr: parameter
+ * print_list_str - a fun that prints only the str element of a linked list
+ * @h: parameter
  * Return: size of list
  */
-size_t print_list_str(const list_t *ptr)
+size_t print_list_str(const list_t *h)
 {
 	size_t i = 0;
 
-	while (ptr)
+	while (h)
 	{
-		_puts(ptr->str ? ptr->str : "(nil)");
+		_puts(h->str ? h->str : "(nil)");
 		_puts("\n");
-		ptr = ptr->next;
+		h = h->next;
 		i++;
 	}
 	return (i);
 }
 
 /**
- * delete_specificnode - a fun that deletes node at given index
+ * delete_node_at_index - a fun that deletes node at given index
  * @head: parameter
  * @index: parameter
  * Return: an int value
  */
-int delete_specificnode(list_t **head, unsigned int index)
+int delete_node_at_index(list_t **head, unsigned int index)
 {
 	list_t *node, *prev_node;
 	unsigned int i = 0;
@@ -131,16 +131,16 @@ int delete_specificnode(list_t **head, unsigned int index)
 }
 
 /**
- * freelist - a fun that frees a list
- * @firstnode: parameter
+ * free_list - a fun that frees all nodes of a list
+ * @head_ptr: parameter
  */
-void freelist(list_t **firstnode)
+void free_list(list_t **head_ptr)
 {
 	list_t *node, *next_node, *head;
 
-	if (!firstnode || !*firstnode)
+	if (!head_ptr || !*head_ptr)
 		return;
-	head = *firstnode;
+	head = *head_ptr;
 	node = head;
 	while (node)
 	{
@@ -149,5 +149,5 @@ void freelist(list_t **firstnode)
 		free(node);
 		node = next_node;
 	}
-	*firstnode = NULL;
+	*head_ptr = NULL;
 }

@@ -41,7 +41,7 @@ char *dup_chars(char *pathstr, int start, int stop)
 }
 
 /**
- * find_path - a fun that finds the cmd in the path string
+ * find_path - a fun that finds this cmd in the PATH string
  * @info: parameter
  * @pathstr: parameter
  * @cmd: parameter

@@ -1,107 +1,133 @@
 #include "shell.h"
 
 /**
- * errormsg - a fun that prints an error message
- * @info: parameter
- * @error: parameter
- * Return: 0 or -1
+ * _erratoi - a fun that converts a string to an integer
+ * @s: parameter
+ * Return: an int value
  */
-void errormsg(info_t *info, char *error)
+int _erratoi(char *s)
 {
-	_eputs(info->fname);
-	_eputs(": ");
-	printdeci(info->line_count, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(info->argv[0]);
-	_eputs(": ");
-	_eputs(error);
+	int i = 0;
+	unsigned long int result = 0;
+
+	if (*s == '+')
+		s++;
+	for (i = 0;  s[i] != '\0'; i++)
+	{
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			result *= 10;
+			result += (s[i] - '0');
+			if (result > INT_MAX)
+				return (-1);
+		}
+		else
+			return (-1);
+	}
+	return (result);
 }
 
 /**
- * printdeci - a fun that prints a decimal num
+ * print_error - a fun that prints an error message
+ * @info: parameter
+ * @estr: parameter
+ */
+void print_error(info_t *info, char *estr)
+{
+	_eputs(info->fname);
+	_eputs(": ");
+	print_d(info->line_count, STDERR_FILENO);
+	_eputs(": ");
+	_eputs(info->argv[0]);
+	_eputs(": ");
+	_eputs(estr);
+}
+
+/**
+ * print_d - a fun that prints a decimal number
  * @input: parameter
- * @file: parameter
+ * @fd: parameter
  * Return: an int value
  */
-int printdeci(int input, int file)
+int print_d(int input, int fd)
 {
 	int (*__putchar)(char) = _putchar;
 	int i, count = 0;
-	unsigned int abs, data;
+	unsigned int _abs_, current;
 
-	if (file == STDERR_FILENO)
+	if (fd == STDERR_FILENO)
 		__putchar = _eputchar;
 	if (input < 0)
 	{
-		abs = -input;
+		_abs_ = -input;
 		__putchar('-');
 		count++;
 	}
 	else
-		abs = input;
-	data = abs;
+		_abs_ = input;
+	current = _abs_;
 	for (i = 1000000000; i > 1; i /= 10)
 	{
-		if (abs / i)
+		if (_abs_ / i)
 		{
-			__putchar('0' + data / i);
+			__putchar('0' + current / i);
 			count++;
 		}
-		data %= i;
+		current %= i;
 	}
-	__putchar('0' + data);
+	__putchar('0' + current);
 	count++;
 
 	return (count);
 }
 
 /**
- * convnum - a fun that convert an int into string
+ * convert_number - a fun that converter function
  * @num: parameter
  * @base: parameter
  * @flags: parameter
- * Return: a string value
+ * Return: a char value
  */
-char *convnum(long int num, int base, int flags)
+char *convert_number(long int num, int base, int flags)
 {
-	static char *arr;
+	static char *array;
 	static char buffer[50];
-	char s = 0;
+	char sign = 0;
 	char *ptr;
 	unsigned long n = num;
 
 	if (!(flags & CONVERT_UNSIGNED) && num < 0)
 	{
 		n = -num;
-		s = '-';
+		sign = '-';
 
 	}
-	arr = flags & CONV_LOWER ? "0123456789abcdef" : "0123456789ABCDEF";
+	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
 	ptr = &buffer[49];
 	*ptr = '\0';
 
 	do	{
-		*--ptr = arr[n % base];
+		*--ptr = array[n % base];
 		n /= base;
 	} while (n != 0);
 
-	if (s)
-		*--ptr = s;
+	if (sign)
+		*--ptr = sign;
 	return (ptr);
 }
 
 /**
- * comments_handeler - a fun that handel comments
- * @address: parameter
+ * remove_comments - a fun that replaces first instance of '#' with '\0'
+ * @buf: parameter
  */
-void comments_handeler(char *address)
+void remove_comments(char *buf)
 {
 	int i;
 
-	for (i = 0; address[i] != '\0'; i++)
-		if (address[i] == '#' && (!i || address[i - 1] == ' '))
+	for (i = 0; buf[i] != '\0'; i++)
+		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
 		{
-			address[i] = '\0';
+			buf[i] = '\0';
 			break;
 		}
 }

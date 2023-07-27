@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
- * freeptr - a fun that frees a pointer
+ * bfree - a fun that frees a pointer
  * @ptr: parameter
- * Return: 1 or 0
+ * Return: an int value
  */
-int freeptr(void **ptr)
+int bfree(void **ptr)
 {
 	if (ptr && *ptr)
 	{
@@ -16,63 +16,62 @@ int freeptr(void **ptr)
 	return (0);
 }
 
-
 /**
- * freestr - a fun that frees a string of strings
- * @str: parametr
- */
-void freestr(char **str)
-{
-	char **s = str;
-
-	if (!str)
-		return;
-	while (*str)
-		free(*str++);
-	free(s);
-}
-
-/**
- **_memset - a fun that fills memory with byte
- *@ptr: parameter
+ **_memset - a fun that fills memory with a constant byte
+ *@s: parameter
  *@b: parameter
- *@amount: parameter
- *Return: a pointer to the memory area
+ *@n: parameter
+ *Return: a char value
  */
-char *_memset(char *ptr, char b, unsigned int amount)
+char *_memset(char *s, char b, unsigned int n)
 {
 	unsigned int i;
 
-	for (i = 0; i < amount; i++)
-		ptr[i] = b;
-	return (ptr);
+	for (i = 0; i < n; i++)
+		s[i] = b;
+	return (s);
+}
+
+/**
+ * ffree - a fun that frees a string of strings
+ * @pp: parameter
+ */
+void ffree(char **pp)
+{
+	char **a = pp;
+
+	if (!pp)
+		return;
+	while (*pp)
+		free(*pp++);
+	free(a);
 }
 
 /**
  * _realloc - a fun that reallocates a block of memory
  * @ptr: parameter
- * @osize: parameter
- * @nsize: parameter
- * Return: pointer
+ * @old_size: parameter
+ * @new_size: parameter
+ * Return: a pointer of type char
  */
-void *_realloc(void *ptr, unsigned int osize, unsigned int nsize)
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	char *p;
 
 	if (!ptr)
-		return (malloc(nsize));
-	if (!nsize)
+		return (malloc(new_size));
+	if (!new_size)
 		return (free(ptr), NULL);
-	if (nsize == osize)
+	if (new_size == old_size)
 		return (ptr);
 
-	p = malloc(nsize);
+	p = malloc(new_size);
 	if (!p)
 		return (NULL);
 
-	osize = osize < nsize ? osize : nsize;
-	while (osize--)
-		p[osize] = ((char *)ptr)[osize];
+	old_size = old_size < new_size ? old_size : new_size;
+	while (old_size--)
+		p[old_size] = ((char *)ptr)[old_size];
 	free(ptr);
 	return (p);
 }

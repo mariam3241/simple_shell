@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * list_len - a fun determines length of linked list
+ * list_len - a fun that determines length of linked list
  * @h: parameter
  * Return: size of list
  */
@@ -100,7 +100,7 @@ list_t *node_starts_with(list_t *node, char *prefix, char c)
  * get_node_index - a fun that gets the index of a node
  * @head: parameter
  * @node: parameter
- * Return: index of node
+ * Return: index of node or -1
  */
 ssize_t get_node_index(list_t *head, list_t *node)
 {
@@ -115,3 +115,4 @@ ssize_t get_node_index(list_t *head, list_t *node)
 	}
 	return (-1);
 }
+

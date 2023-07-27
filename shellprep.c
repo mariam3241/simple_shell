@@ -30,7 +30,7 @@ int _myexit(info_t *info)
 /**
  * _mycd - a fun that changes the current directory of the process
  * @info: parameter
- *  Return: an int value
+ * Return: an int value
  */
 int _mycd(info_t *info)
 {
